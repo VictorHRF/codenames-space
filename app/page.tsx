@@ -1,65 +1,90 @@
-import Image from "next/image";
+'use client'; // Esto habilita la interactividad, el estado y los hooks de React
+
+import { useState } from 'react';
+import { useRouter } from 'next/navigation'; // Importante: usar next/navigation en App Router
+import { crearNuevaMision } from './actions/crearMision';
 
 export default function Home() {
+  const router = useRouter();
+  
+  // Estados para controlar los inputs y el estado de carga
+  const [codigo, setCodigo] = useState('');
+  const [creando, setCreando] = useState(false);
+
+  // Función 1: Crea la sala en Supabase y nos redirige
+  const handleCrearMision = async () => {
+    setCreando(true);
+    const idMision = await crearNuevaMision();
+    
+    if (idMision) {
+      // Redirigimos al usuario a la URL única de su sala
+      router.push(`/mision/${idMision}`);
+    } else {
+      alert("Error al establecer conexión con la base central.");
+      setCreando(false);
+    }
+  };
+
+  // Función 2: Nos lleva a una sala existente
+  const handleUnirse = () => {
+    if (codigo.trim().length > 0) {
+      router.push(`/mision/${codigo.toUpperCase()}`);
+    }
+  };
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <main className="min-h-screen flex items-center justify-center bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-slate-900 to-black text-white p-4">
+      
+      <div className="backdrop-blur-xl bg-white/5 border border-white/10 p-10 md:p-14 rounded-3xl shadow-[0_0_50px_rgba(34,211,238,0.1)] flex flex-col items-center max-w-md w-full relative overflow-hidden">
+        
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-1 bg-gradient-to-r from-transparent via-cyan-500 to-transparent opacity-50"></div>
+
+        <h1 className="text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-600 mb-2 text-center tracking-tight">
+          CÓDIGO ALIEN
+        </h1>
+        <p className="text-slate-400 mb-10 tracking-[0.2em] text-xs md:text-sm uppercase font-semibold text-center">
+          Transmisión Encriptada
+        </p>
+
+        <button 
+          onClick={handleCrearMision}
+          disabled={creando}
+          className="w-full bg-cyan-600 hover:bg-cyan-500 disabled:bg-cyan-800 disabled:cursor-not-allowed text-white font-bold py-4 px-8 rounded-xl transition-all duration-300 hover:shadow-[0_0_25px_rgba(8,145,178,0.6)] hover:-translate-y-1 mb-8"
+        >
+          {creando ? 'INICIALIZANDO...' : 'INICIAR NUEVA MISIÓN'}
+        </button>
+
+        <div className="flex items-center w-full mb-8">
+          <div className="flex-1 h-px bg-white/10"></div>
+          <span className="px-4 text-slate-500 text-sm font-medium tracking-widest">O</span>
+          <div className="flex-1 h-px bg-white/10"></div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
+
+        <div className="w-full space-y-3">
+          <label htmlFor="codigo" className="text-xs text-slate-400 font-medium uppercase tracking-wider ml-1">
+            Enlace de conexión
+          </label>
+          <div className="flex gap-2">
+            <input 
+              id="codigo"
+              type="text" 
+              value={codigo}
+              onChange={(e) => setCodigo(e.target.value)}
+              onKeyDown={(e) => e.key === 'Enter' && handleUnirse()}
+              placeholder="EJ: X7B9" 
+              maxLength={4}
+              className="bg-slate-950/50 border border-slate-700/50 rounded-xl px-4 py-3 w-full text-center text-lg tracking-[0.25em] uppercase focus:border-cyan-500 focus:outline-none focus:ring-1 focus:ring-cyan-500 transition-all placeholder:text-slate-600 placeholder:font-light"
             />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+            <button 
+              onClick={handleUnirse}
+              className="bg-slate-800 hover:bg-slate-700 border border-slate-700 hover:border-slate-600 text-cyan-400 font-bold px-6 py-3 rounded-xl transition-all"
+            >
+              UNIRSE
+            </button>
+          </div>
         </div>
-      </main>
-    </div>
+
+      </div>
+    </main>
   );
 }
