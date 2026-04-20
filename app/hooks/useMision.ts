@@ -86,8 +86,10 @@ export function useMision(idMision: string) {
     );
 
     // Lógica rápida para cambio de turno
+    // Lógica rápida para cambio de turno
     let nuevoTurno = mision.turno_actual;
-    let nuevoEstado = mision.estado;
+    // Le decimos a TypeScript que acepte cualquiera de los estados válidos
+    let nuevoEstado: EstadoMision['estado'] = mision.estado;
 
     if (cartaTocada.identidad_secreta === 'asesino') {
       nuevoEstado = 'gana_alien';
