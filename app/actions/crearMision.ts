@@ -16,16 +16,19 @@ export async function crearNuevaMision() {
     const palabrasMezcladas = barajarArray(DICCIONARIO_ESPACIAL).slice(0, 25);
 
     // 2. Decidir qué equipo empieza (50% de probabilidad para cada uno)
-    const turnoInicial = Math.random() > 0.5 ? 'rojo' : 'azul';
+    // Determinar quién empieza (ahora con Zirtox y Nebulis)
+  const equipoInicial = Math.random() > 0.5 ? 'zirtox' : 'nebulis';
 
-    // 3. Crear el "mazo" de identidades secretas según las reglas de Codenames
-    // El equipo que empieza tiene 9 agentes, el otro 8. 7 inocentes, 1 asesino (Alien).
+    // Crear el arreglo de 25 identidades
     const identidades = [
-      ...Array(turnoInicial === 'rojo' ? 9 : 8).fill('rojo'),
-      ...Array(turnoInicial === 'azul' ? 9 : 8).fill('azul'),
-      ...Array(7).fill('inocente'),
-      'asesino'
+      ...Array(8).fill('zirtox'),
+      ...Array(8).fill('nebulis'),
+      ...Array(7).fill('inocente'), // Basura espacial
+      'asesino' // Agujero negro
     ];
+
+    // El equipo que empieza tiene un agente extra (la nave doble)
+    identidades.push(equipoInicial);
 
     // Mezclamos las identidades
     const identidadesMezcladas = barajarArray(identidades);
@@ -47,7 +50,7 @@ export async function crearNuevaMision() {
       .insert([
         {
           id: idMision,
-          turno_actual: turnoInicial,
+          turno_actual: equipoInicial,
           tablero: tablero,
           requiere_pista_digital: false // Nuestra opción para usar voz en presencial
         }

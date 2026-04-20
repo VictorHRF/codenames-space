@@ -12,16 +12,16 @@ const supabase = createClient(
 export type Carta = {
   id: number;
   palabra: string;
-  identidad_secreta: 'rojo' | 'azul' | 'inocente' | 'asesino';
+  identidad_secreta: 'zirtox' | 'nebulis' | 'inocente' | 'asesino';
   revelada: boolean;
 };
 
 export type EstadoMision = {
   id: string;
-  turno_actual: 'rojo' | 'azul';
+  turno_actual: 'zirtox' | 'nebulis';
   pista_actual: { palabra: string; cantidad: number } | null;
   tablero: Carta[];
-  estado: 'jugando' | 'gana_azul' | 'gana_rojo' | 'gana_alien';
+  estado: 'jugando' | 'gana_zirtox' | 'gana_nebulis' | 'gana_alien';
 };
 
 export function useMision(idMision: string) {
@@ -94,23 +94,23 @@ export function useMision(idMision: string) {
     if (cartaTocada.identidad_secreta === 'asesino') {
       nuevoEstado = 'gana_alien';
     } else if (cartaTocada.identidad_secreta === 'inocente' || cartaTocada.identidad_secreta !== mision.turno_actual) {
-       // Pierden el turno si tocan a un inocente o al color contrario
-       nuevoTurno = mision.turno_actual === 'rojo' ? 'azul' : 'rojo';
-       // Borramos la pista actual para que el nuevo equipo reciba una nueva
-       await supabase.from('misiones').update({ 
-         tablero: nuevoTablero, 
-         turno_actual: nuevoTurno,
-         pista_actual: null 
-       }).eq('id', idMision);
-       return;
+      // Pierden el turno si abducen a un humano (inocente) o tocan una nave enemiga
+      nuevoTurno = mision.turno_actual === 'zirtox' ? 'nebulis' : 'zirtox';
+      // Borramos la pista actual para que el nuevo equipo reciba una nueva
+        await supabase.from('misiones').update({ 
+          tablero: nuevoTablero, 
+          turno_actual: nuevoTurno,
+          pista_actual: null 
+        }).eq('id', idMision);
+        return;
     }
 
     // Comprobamos si alguien ganó (si revelaron todas sus cartas)
-    const faltanAzules = nuevoTablero.filter(c => c.identidad_secreta === 'azul' && !c.revelada).length;
-    const faltanRojas = nuevoTablero.filter(c => c.identidad_secreta === 'rojo' && !c.revelada).length;
+    const faltanZirtox = nuevoTablero.filter(c => c.identidad_secreta === 'zirtox' && !c.revelada).length;
+    const faltanNebulis = nuevoTablero.filter(c => c.identidad_secreta === 'nebulis' && !c.revelada).length;
 
-    if (faltanAzules === 0) nuevoEstado = 'gana_azul';
-    if (faltanRojas === 0) nuevoEstado = 'gana_rojo';
+    if (faltanZirtox === 0) nuevoEstado = 'gana_zirtox';
+    if (faltanNebulis === 0) nuevoEstado = 'gana_nebulis';
 
     // Enviamos el tablero actualizado a la base de datos
     await supabase.from('misiones').update({ 
@@ -130,7 +130,7 @@ export function useMision(idMision: string) {
 
   const terminarTurno = async () => {
       if (!mision || mision.estado !== 'jugando') return;
-      const nuevoTurno = mision.turno_actual === 'rojo' ? 'azul' : 'rojo';
+      const nuevoTurno = mision.turno_actual === 'zirtox' ? 'nebulis' : 'zirtox';
       await supabase.from('misiones').update({ 
         turno_actual: nuevoTurno,
         pista_actual: null 

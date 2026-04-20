@@ -51,8 +51,8 @@ export default function SalaMision() {
   }
 
   // Contadores para el Header del Jefe de Espías
-  const faltanAzules = mision.tablero.filter(c => c.identidad_secreta === 'azul' && !c.revelada).length;
-  const faltanRojas = mision.tablero.filter(c => c.identidad_secreta === 'rojo' && !c.revelada).length;
+  const faltanZirtox = mision.tablero.filter(c => c.identidad_secreta === 'zirtox' && !c.revelada).length;
+  const faltanNebulis = mision.tablero.filter(c => c.identidad_secreta === 'nebulis' && !c.revelada).length;
 
   // --- 2. VISTA DE LA COMPUTADORA CENTRAL (CELULAR) ---
   if (rol === 'ia') {
@@ -66,14 +66,14 @@ export default function SalaMision() {
               <h1 className="text-xl font-black text-white">MAPA TÁCTICO</h1>
             </div>
             <div className="flex gap-2">
-              <div className="bg-cyan-900 border border-cyan-500 px-3 py-1 rounded text-cyan-100 font-bold">{faltanAzules}</div>
-              <div className="bg-red-900 border border-red-500 px-3 py-1 rounded text-red-100 font-bold">{faltanRojas}</div>
+              <div className="bg-cyan-900 border border-cyan-500 px-3 py-1 rounded text-cyan-100 font-bold">{faltanZirtox}</div>
+              <div className="bg-red-900 border border-red-500 px-3 py-1 rounded text-red-100 font-bold">{faltanNebulis}</div>
             </div>
           </header>
 
           <div className="bg-white/5 border border-white/10 p-4 rounded-xl mb-6 backdrop-blur-md">
             <label className="block text-xs text-slate-400 font-medium uppercase tracking-widest mb-3">
-              Transmitir Coordenadas ({mision.turno_actual === 'azul' ? 'Turno Azul' : 'Turno Rojo'})
+              Transmitir Coordenadas ({mision.turno_actual === 'zirtox' ? 'Turno Zirtox' : 'Turno Nebulis'})
             </label>
             <div className="flex gap-2">
               <input 
@@ -107,8 +107,8 @@ export default function SalaMision() {
           <div className="grid grid-cols-5 gap-1 md:gap-2">
             {mision.tablero.map((carta) => {
               let estilosCarta = "";
-              if (carta.identidad_secreta === 'azul') estilosCarta = "bg-cyan-900 border-cyan-700 text-cyan-100";
-              else if (carta.identidad_secreta === 'rojo') estilosCarta = "bg-red-900 border-red-700 text-red-100";
+              if (carta.identidad_secreta === 'zirtox') estilosCarta = "bg-cyan-900 border-cyan-700 text-cyan-100";
+              else if (carta.identidad_secreta === 'nebulis') estilosCarta = "bg-red-900 border-red-700 text-red-100";
               else if (carta.identidad_secreta === 'inocente') estilosCarta = "bg-slate-800 border-slate-600 text-slate-300";
               else if (carta.identidad_secreta === 'asesino') estilosCarta = "bg-black border-green-500 text-green-500 shadow-[0_0_10px_rgba(34,197,94,0.3)]";
 
@@ -145,7 +145,7 @@ export default function SalaMision() {
 
           <div className="flex flex-col items-center bg-black/50 border border-slate-700 px-8 py-3 rounded-xl shadow-[0_0_15px_rgba(34,211,238,0.2)]">
             <span className="text-xs text-slate-400 uppercase tracking-widest mb-1">
-              {mision.turno_actual === 'azul' ? <span className="text-cyan-400">Turno Equipo Azul</span> : <span className="text-red-400">Turno Equipo Rojo</span>}
+              {mision.turno_actual === 'zirtox' ? <span className="text-cyan-400">Turno Equipo Zirtox</span> : <span className="text-red-400">Turno Equipo Nebulis</span>}
             </span>
             <div className="flex items-center gap-3 min-h-[32px]">
               {mision.pista_actual ? (
@@ -169,13 +169,19 @@ export default function SalaMision() {
 
         <div className="max-w-6xl mx-auto grid grid-cols-5 gap-2 md:gap-4">
           {mision.tablero.map((carta) => {
-            let estilosCarta = "bg-white/5 border-white/10 hover:bg-white/10 hover:border-cyan-500/50 hover:shadow-[0_0_20px_rgba(34,211,238,0.3)] text-white cursor-pointer"; 
-            
+            // Lógica de colores para las cartas
+            let estilosCarta = "bg-white/5 border-white/20 text-white hover:bg-white/10"; // Cristal oscuro por defecto
+
             if (carta.revelada) {
-              if (carta.identidad_secreta === 'azul') estilosCarta = "bg-cyan-600 border-cyan-400 shadow-[0_0_20px_rgba(34,211,238,0.5)] text-white";
-              else if (carta.identidad_secreta === 'rojo') estilosCarta = "bg-red-600 border-red-400 shadow-[0_0_20px_rgba(248,113,113,0.5)] text-white";
-              else if (carta.identidad_secreta === 'inocente') estilosCarta = "bg-slate-600 border-slate-400 opacity-60 text-slate-200";
-              else if (carta.identidad_secreta === 'asesino') estilosCarta = "bg-black border-green-500 shadow-[0_0_30px_rgba(34,197,94,0.8)] text-green-400";
+              if (carta.identidad_secreta === 'zirtox') {
+                estilosCarta = "bg-green-500/20 border-green-500 text-green-400 shadow-[0_0_15px_#22c55e]";
+              } else if (carta.identidad_secreta === 'nebulis') {
+                estilosCarta = "bg-pink-500/20 border-pink-500 text-pink-400 shadow-[0_0_15px_#ec4899]";
+              } else if (carta.identidad_secreta === 'inocente') {
+                estilosCarta = "bg-gray-800 border-gray-600 text-gray-500 opacity-50";
+              } else if (carta.identidad_secreta === 'asesino') {
+                estilosCarta = "bg-black border-red-600 text-red-500 shadow-[0_0_30px_#dc2626] animate-pulse";
+              }
             }
 
             return (
@@ -204,8 +210,8 @@ export default function SalaMision() {
           <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50">
              <div className="bg-slate-900 border border-slate-700 p-10 rounded-2xl text-center shadow-2xl">
                 <h2 className="text-4xl font-black mb-4 uppercase">
-                  {mision.estado === 'gana_azul' && <span className="text-cyan-400">¡ESCUADRÓN AZUL GANA!</span>}
-                  {mision.estado === 'gana_rojo' && <span className="text-red-400">¡ESCUADRÓN ROJO GANA!</span>}
+                  {mision.estado === 'gana_zirtox' && <span className="text-cyan-400">¡ESCUADRÓN ZIRTOX GANA!</span>}
+                  {mision.estado === 'gana_nebulis' && <span className="text-red-400">¡ESCUADRÓN NEBULIS GANA!</span>}
                   {mision.estado === 'gana_alien' && <span className="text-green-500">¡EL ALIENÍGENA HA VENCIDO!</span>}
                 </h2>
                 <button onClick={() => window.location.href = '/'} className="mt-6 bg-white text-black px-8 py-3 rounded-xl font-bold">Volver a la Base</button>
