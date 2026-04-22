@@ -33,55 +33,76 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen flex items-center justify-center bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-slate-900 to-black text-white p-4">
+    <main className="grow flex items-center justify-center p-4 mt-16">
       
-      <div className="backdrop-blur-xl bg-white/5 border border-white/10 p-10 md:p-14 rounded-3xl shadow-[0_0_50px_rgba(34,211,238,0.1)] flex flex-col items-center max-w-md w-full relative overflow-hidden">
+      <div className="w-full max-w-md relative bracket-tl bracket-br bg-surface-container/70 backdrop-blur-lg shadow-[0_0_40px_rgba(142,255,112,0.08)] p-8 sm:p-10 border border-outline-variant/15">
         
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-1 bg-gradient-to-r from-transparent via-cyan-500 to-transparent opacity-50"></div>
+        <div className='text-center sm:text-left relative'>
+          
+          <div className="absolute -left-10 top-0 w-1 h-full bg-gradient-to-b from-primary to-transparent hidden sm:block"></div>
 
-        <h1 className="text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-600 mb-2 text-center tracking-tight">
-          CÓDIGO ALIEN
-        </h1>
-        <p className="text-slate-400 mb-10 tracking-[0.2em] text-xs md:text-sm uppercase font-semibold text-center">
-          Transmisión Encriptada
-        </p>
+          <h1 className="text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#8eff71] to-[#ff6b9b] mb-2 text-center tracking-tight">
+            OPERACIÓN ESPACIAL
+          </h1>
+          <p className="font-label text-primary text-[10px] mb-10 tracking-[0.2em] md:text-sm uppercase text-center">
+            SYSTEM STATUS: ACTIVE
+          </p>
 
-        <button 
-          onClick={handleCrearMision}
-          disabled={creando}
-          className="w-full bg-cyan-600 hover:bg-cyan-500 disabled:bg-cyan-800 disabled:cursor-not-allowed text-white font-bold py-4 px-8 rounded-xl transition-all duration-300 hover:shadow-[0_0_25px_rgba(8,145,178,0.6)] hover:-translate-y-1 mb-8"
-        >
-          {creando ? 'INICIALIZANDO...' : 'INICIAR NUEVA MISIÓN'}
-        </button>
+          <div className='mb-2 relative group cursor-pointer'>
 
-        <div className="flex items-center w-full mb-8">
-          <div className="flex-1 h-px bg-white/10"></div>
-          <span className="px-4 text-slate-500 text-sm font-medium tracking-widest">O</span>
-          <div className="flex-1 h-px bg-white/10"></div>
-        </div>
+            <div className="absolute -inset-1 bg-primary/20 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-lg"></div>
 
-        <div className="w-full space-y-3">
-          <label htmlFor="codigo" className="text-xs text-slate-400 font-medium uppercase tracking-wider ml-1">
-            Enlace de conexión
-          </label>
-          <div className="flex gap-2">
-            <input 
-              id="codigo"
-              type="text" 
-              value={codigo}
-              onChange={(e) => setCodigo(e.target.value)}
-              onKeyDown={(e) => e.key === 'Enter' && handleUnirse()}
-              placeholder="EJ: X7B9" 
-              maxLength={4}
-              className="bg-slate-950/50 border border-slate-700/50 rounded-xl px-4 py-3 w-full text-center text-lg tracking-[0.25em] uppercase focus:border-cyan-500 focus:outline-none focus:ring-1 focus:ring-cyan-500 transition-all placeholder:text-slate-600 placeholder:font-light"
-            />
-            <button 
-              onClick={handleUnirse}
-              className="bg-slate-800 hover:bg-slate-700 border border-slate-700 hover:border-slate-600 text-cyan-400 font-bold px-6 py-3 rounded-xl transition-all"
-            >
-              UNIRSE
-            </button>
+              <button 
+                onClick={handleCrearMision}
+                disabled={creando}
+                className="w-full relative mb-8 flex justify-center p-5 bg-gradient-to-r from-primary to-primary-container rounded-lg overflow-hidden transition-transform duration-300 active:scale-[0.98]"
+              >
+                <span className="font-headline font-bold text-on-primary-fixed text-lg tracking-wide uppercase">{creando ? 'INICIALIZANDO...' : 'INICIAR NUEVA MISIÓN'}</span>
+              </button>
           </div>
+
+          <div className="flex items-center w-full mb-8">
+            <div className="flex-1 h-px bg-white/10"></div>
+            <span className="px-4 text-slate-500 text-sm font-medium tracking-widest">O</span>
+            <div className="flex-1 h-px bg-white/10"></div>
+          </div>
+
+          <div className="space-y-4">
+            <label htmlFor="codigo" className="text-xs font-label text-tertiary tracking-[0.2em] uppercase mb-2 block">
+              Enlace de conexión
+            </label>
+
+            <div className="relative">
+              <input 
+                id="codigo"
+                type="text" 
+                value={codigo}
+                onChange={(e) => setCodigo(e.target.value)}
+                onKeyDown={(e) => e.key === 'Enter' && handleUnirse()}
+                placeholder="Ingresa código de misión (EJ: X7B9)" 
+                maxLength={4}
+                className="w-full bg-surface-container-lowest/80 border border-outline-variant/30 text-on-surface placeholder:text-on-surface-variant/40 rounded-lg pl-10 pr-4 py-4 font-label text-sm tracking-widest uppercase focus:outline-none focus:border-tertiary focus:ring-1 focus:ring-tertiary/50 focus:bg-tertiary/5 transition-all shadow-inner"
+              />
+            </div>
+              <button 
+                onClick={handleUnirse}
+                className="w-full relative group p-4 bg-transparent border-[1.5px] border-tertiary rounded-lg flex items-center justify-center gap-3 overflow-hidden transition-all duration-300 hover:bg-tertiary/10 hover:shadow-[0_0_24px_rgba(255,107,155,0.2)] active:scale-[0.98]"
+              >
+                <span className="font-headline font-bold text-tertiary text-sm tracking-widest uppercase group-hover:text-tertiary-fixed transition-colors">Unirse a misión</span>
+              </button>
+          </div>
+
+          <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 border-t border-outline-variant/15 pt-6">
+            <a className="font-label text-xs tracking-[0.15em] text-on-surface-variant hover:text-primary transition-colors uppercase" href="#">Reglas del Juego</a>
+            <div className="hidden sm:block w-1 h-1 rounded-full bg-outline-variant/50"></div>
+            <a className="font-label text-xs tracking-[0.15em] text-on-surface-variant hover:text-tertiary transition-colors uppercase" href="#">Historia del Juego</a>
+            </div>
+            
+            <div className="mt-4 border-t border-outline-variant/10 flex justify-between items-center opacity-40">
+            <span className="font-label text-[8px] tracking-[0.2em]">V 2.4.9</span>
+            <span className="font-label text-[8px] tracking-[0.2em]">SEC: CLEAR</span>
+            </div>
+
         </div>
 
       </div>

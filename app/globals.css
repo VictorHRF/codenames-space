@@ -6,11 +6,72 @@
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* Configuración de Colores */
+  --color-surface-container-lowest: #000000;
+  --color-primary: #8eff71;
+  --color-secondary-container: #006970;
+  --color-tertiary-fixed-dim: #ff75a0;
+  --color-surface-variant: #1e272e;
+  --color-inverse-on-surface: #50565c;
+  --color-on-primary-fixed-variant: #0d6200;
+  --color-on-secondary: #005359;
+  --color-surface: #090f14;
+  --color-on-secondary-fixed-variant: #005e64;
+  --color-surface-container-high: #192027;
+  --color-surface-tint: #8eff71;
+  --color-surface-container-low: #0e141a;
+  --color-surface-dim: #090f14;
+  --color-secondary-fixed: #00eefc;
+  --color-on-tertiary-fixed: #380017;
+  --color-surface-container-highest: #1e272e;
+  --color-on-primary-fixed: #064200;
+  --color-error-dim: #d53d18;
+  --color-tertiary-dim: #e30071;
+  --color-secondary-dim: #00deec;
+  --color-primary-container: #2ff801;
+  --color-tertiary: #ff6b9b;
+  --color-error-container: #b92902;
+  --color-on-surface-variant: #a6acb3;
+  --color-tertiary-fixed: #ff8eae;
+  --color-on-error-container: #ffd2c8;
+  --color-on-surface: #eff4fc;
+  --color-on-primary: #0d6100;
+  --color-surface-container: #131a21;
+  --color-primary-dim: #2be800;
+  --color-on-secondary-fixed: #003f43;
+  --color-secondary: #00eefc;
+  --color-on-tertiary: #47001f;
+  --color-tertiary-container: #ff067f;
+  --color-primary-fixed-dim: #2be800;
+  --color-primary-fixed: #2ff801;
+  --color-on-tertiary-container: #000000;
+  --color-error: #ff7351;
+  --color-secondary-fixed-dim: #00deec;
+  --color-on-tertiary-fixed-variant: #760037;
+  --color-inverse-primary: #106f00;
+  --color-on-background: #eff4fc;
+  --color-background: #090f14;
+  --color-inverse-surface: #f7f9ff;
+  --color-outline-variant: #43494f;
+  --color-surface-bright: #242d35;
+  --color-outline: #70767d;
+  --color-on-primary-container: #0b5800;
+  --color-on-error: #450900;
+  --color-on-secondary-container: #e3fdff;
+
+  /* Bordes (Border Radius) */
+  --radius-default: 0.125rem;
+  --radius-lg: 0.25rem;
+  --radius-xl: 0.5rem;
+  --radius-full: 0.75rem;
+
+  /* Fuentes (Mapping a variables de Next/Font) */
+  --font-headline: var(--font-space-grotesk), sans-serif;
+  --font-body: var(--font-space-grotesk), sans-serif;
+  --font-label: var(--font-space-grotesk), sans-serif;
+
 }
+
 
 @media (prefers-color-scheme: dark) {
   :root {
@@ -22,5 +83,30 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+}
+
+/* Tactical corner brackets */
+.bracket-tl::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 16px;
+    height: 16px;
+    border-top: 2px solid var(--bracket-color, #8eff71);
+    border-left: 2px solid var(--bracket-color, #8eff71);
+    pointer-events: none;
+}
+
+.bracket-br::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 16px;
+    height: 16px;
+    border-bottom: 2px solid var(--bracket-color-alt, #ff6b9b);
+    border-right: 2px solid var(--bracket-color-alt, #ff6b9b);
+    pointer-events: none;
 }
