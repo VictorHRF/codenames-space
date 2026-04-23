@@ -1,7 +1,7 @@
 'use client'; // Esto habilita la interactividad, el estado y los hooks de React
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation'; // Importante: usar next/navigation en App Router
+import { useRouter } from 'next/navigation';
 import { crearNuevaMision } from './actions/crearMision';
 import Link from 'next/link';
 
@@ -43,16 +43,14 @@ export default function Home() {
           <div className="absolute -left-10 top-0 w-1 h-full bg-gradient-to-b from-primary to-transparent hidden sm:block"></div>
 
           <h1 className="text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#8eff71] to-[#ff6b9b] mb-2 text-center tracking-tight">
-            OPERACIÓN ESPACIAL
+            CÓDIGO ALIEN
           </h1>
           <p className="font-label text-primary text-[10px] mb-10 tracking-[0.2em] md:text-sm uppercase text-center">
-            SYSTEM STATUS: ACTIVE
+            ESTATUS DE SISTEMA: ACTIVO
           </p>
 
           <div className='mb-2 relative group cursor-pointer'>
-
             <div className="absolute -inset-1 bg-primary/20 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-lg"></div>
-
               <button 
                 onClick={handleCrearMision}
                 disabled={creando}
@@ -80,7 +78,7 @@ export default function Home() {
                 value={codigo}
                 onChange={(e) => setCodigo(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleUnirse()}
-                placeholder="Ingresa código de misión (EJ: X7B9)" 
+                placeholder="Ingresa código de misión..." 
                 maxLength={4}
                 className="w-full bg-surface-container-lowest/80 border border-outline-variant/30 text-on-surface placeholder:text-on-surface-variant/40 rounded-lg pl-10 pr-4 py-4 font-label text-sm tracking-widest uppercase focus:outline-none focus:border-tertiary focus:ring-1 focus:ring-tertiary/50 focus:bg-tertiary/5 transition-all shadow-inner"
               />
@@ -105,7 +103,6 @@ export default function Home() {
           </div>
 
         </div>
-
       </div>
     </main>
   );

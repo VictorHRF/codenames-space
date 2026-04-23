@@ -7,9 +7,9 @@ import { useMision } from '../../hooks/useMision';
 export default function SalaMision() {
   const params = useParams();
   const idMision = params.id as string;
-  const [rol, setRol] = useState<'ia' | 'escuadron' | null>(null);
+  const [rol, setRol] = useState<'jefe' | 'tripulante' | null>(null);
 
-  // Estados para el formulario del Jefe de Espías
+  // Estados para el formulario del Jefe de flota
   const [palabraClave, setPalabraClave] = useState('');
   const [cantidadClave, setCantidadClave] = useState('1');
 
@@ -52,12 +52,12 @@ export default function SalaMision() {
             </h1>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-8">
-            {/* Escuadrón - Color Verde (Primary) */}
+          <div className="grid md:grid-cols-2 gap-6">
+            {/* Tripulante - Color Verde (Primary) */}
             <div className="group relative">
               <div className="absolute -inset-1 bg-primary/20 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl"></div>
               <button 
-                onClick={() => setRol('escuadron')} 
+                onClick={() => setRol('tripulante')} 
                 className="w-full relative flex flex-col items-center p-10 bg-surface-container/70 backdrop-blur-lg border border-outline-variant/15 rounded-2xl hover:border-primary/50 transition-all text-center bracket-tl"
               >
                 <div className="w-16 h-16 mb-6 rounded-full bg-primary/10 flex items-center justify-center border border-primary/20 group-hover:scale-110 transition-transform">
@@ -69,11 +69,11 @@ export default function SalaMision() {
               </button>
             </div>
 
-            {/* Computadora Central - Color Rosa (Tertiary) */}
+            {/* Jefe de flota - Color Rosa (Tertiary) */}
             <div className="group relative">
               <div className="absolute -inset-1 bg-tertiary/20 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl"></div>
               <button 
-                onClick={() => setRol('ia')} 
+                onClick={() => setRol('jefe')} 
                 className="w-full relative flex flex-col items-center p-10 bg-surface-container/70 backdrop-blur-lg border border-outline-variant/15 rounded-2xl hover:border-tertiary/50 transition-all text-center bracket-br"
               >
                 <div className="w-16 h-16 mb-6 rounded-full bg-tertiary/10 flex items-center justify-center border border-tertiary/20 group-hover:scale-110 transition-transform">
@@ -90,28 +90,28 @@ export default function SalaMision() {
     );
   }
 
-  // Contadores para el Header del Jefe de Espías
+  // Contadores para el Header del Jefe de flota
   const faltanZirtox = mision.tablero.filter(c => c.identidad_secreta === 'zirtox' && !c.revelada).length;
   const faltanNebulis = mision.tablero.filter(c => c.identidad_secreta === 'nebulis' && !c.revelada).length;
 
-  // --- 2. VISTA DE LA COMPUTADORA CENTRAL (CELULAR/TABLET) ---
-  if (rol === 'ia') {
+  // --- 2. VISTA DEL JEFE DE FLOTA ---
+  if (rol === 'jefe') {
     return (
       <main className="grow flex flex-col p-2 md:p-4 lg:p-6">
         <div className="w-full h-full max-w-7xl mx-auto flex flex-col">
           
-          <header className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-4 md:mb-6 bg-surface-container/70 backdrop-blur-md border border-outline-variant/15 p-3 md:p-5 rounded-xl bracket-tl">
+          <header className="flex flex-row justify-between items-start md:items-center gap-4 mb-4 md:mb-6 bg-surface-container/70 backdrop-blur-md border border-outline-variant/15 p-3 md:p-5 rounded-xl bracket-tl">
             <div>
-              <p className="text-tertiary font-label text-[8px] md:text-[10px] uppercase tracking-[0.2em] mb-1">Enlace de Datos: Nivel 5</p>
+              <p className="text-tertiary font-label text-[8px] md:text-[10px] uppercase tracking-[0.2em] mb-1">Enlace de Datos: Nivel 5 | Misión: {mision.id}</p>
               <h1 className="text-lg md:text-xl font-headline font-black text-white tracking-tight">MAPA TÁCTICO</h1>
             </div>
             <div className="flex gap-2 md:gap-3">
               <div className="flex flex-col items-center">
-                <span className="text-[7px] md:text-[8px] font-label text-primary uppercase mb-1">ZIR</span>
+                <span className="text-[7px] md:text-[8px] font-label text-primary uppercase mb-1">ZIRTOX</span>
                 <div className="bg-primary/10 border border-primary/30 px-2 md:px-3 py-1 rounded text-primary font-bold text-base md:text-lg">{faltanZirtox}</div>
               </div>
               <div className="flex flex-col items-center">
-                <span className="text-[7px] md:text-[8px] font-label text-tertiary uppercase mb-1">NEB</span>
+                <span className="text-[7px] md:text-[8px] font-label text-tertiary uppercase mb-1">NEBULIS</span>
                 <div className="bg-tertiary/10 border border-tertiary/30 px-2 md:px-3 py-1 rounded text-tertiary font-bold text-base md:text-lg">{faltanNebulis}</div>
               </div>
             </div>
@@ -156,23 +156,23 @@ export default function SalaMision() {
             </div>
           </div>
 
-          <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-1 md:gap-2 lg:gap-3 flex-1">
+          <div className="grid grid-cols-5 gap-2 md:gap-4">
             {mision.tablero.map((carta) => {
               let estilosCarta = "";
-              if (carta.identidad_secreta === 'zirtox') estilosCarta = "bg-primary/20 border-primary/40 text-primary shadow-[0_0_10px_rgba(142,255,113,0.1)]";
-              else if (carta.identidad_secreta === 'nebulis') estilosCarta = "bg-tertiary/20 border-tertiary/40 text-tertiary shadow-[0_0_10px_rgba(255,107,155,0.1)]";
-              else if (carta.identidad_secreta === 'inocente') estilosCarta = "bg-surface-container-high/50 border-outline-variant/30 text-on-surface-variant";
-              else if (carta.identidad_secreta === 'asesino') estilosCarta = "bg-black border-error/50 text-error shadow-[0_0_15px_rgba(255,115,81,0.2)]";
+              if (carta.identidad_secreta === 'zirtox') estilosCarta = "bg-primary/30 border-primary/80 text-primary shadow-[0_0_10px_rgba(142,255,113,0.1)]";
+              else if (carta.identidad_secreta === 'nebulis') estilosCarta = "bg-tertiary/30 border-tertiary/80 text-tertiary shadow-[0_0_10px_rgba(255,107,155,0.1)]";
+              else if (carta.identidad_secreta === 'inocente') estilosCarta = "bg-surface-container-high/80 border-outline-variant/30 text-on-surface-variant";
+              else if (carta.identidad_secreta === 'asesino') estilosCarta = "bg-black border-error/10 text-error shadow-[0_0_15px_rgba(255,115,81,0.2)]";
 
               const estilosRevelada = carta.revelada ? "opacity-20 grayscale scale-95" : "hover:scale-[1.02]";
 
               return (
-                <div key={carta.id} className={`relative flex items-center justify-center p-1 md:p-1.5 rounded-lg border aspect-[3/4] overflow-hidden text-center transition-all duration-300 ${estilosCarta} ${estilosRevelada}`}>
+                <div key={carta.id} className={`relative flex items-center justify-center p-1 rounded-lg border aspect-square overflow-hidden text-center transition-all duration-300 ${estilosCarta} ${estilosRevelada}`}>
                   <div className="absolute top-0 left-0 w-1 h-1 border-t border-l border-current/30"></div>
                   {carta.revelada && (
                     <div className="absolute inset-0 flex items-center justify-center text-current/40 text-2xl font-black mix-blend-overlay">✕</div>
                   )}
-                  <span className="font-label font-bold text-[6px] md:text-[8px] lg:text-[10px] leading-tight tracking-wider break-words w-full uppercase">
+                  <span className="font-label font-bold text-[10px] md:text-[16px] leading-tight tracking-wider break-words uppercase">
                     {carta.palabra}
                   </span>
                 </div>
@@ -188,8 +188,8 @@ export default function SalaMision() {
     );
   }
 
-  // --- 3. VISTA DEL ESCUADRÓN (IPAD) ---
-  if (rol === 'escuadron') {
+  // --- 3. VISTA DEL TRIPULANTE  ---
+  if (rol === 'tripulante') {
     return (
       <main className="min-h-screen bg-[#050B14] text-white p-4 md:p-8 font-sans bg-[url('https://www.transparenttextures.com/patterns/stardust.png')]">
         

@@ -10,7 +10,7 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: "Operación Espacial",
+  title: "Código Alien",
   description: "Juego de estrategia espacial en tiempo real. ¿Podrás conquistar la galaxia?",
 };
 

@@ -18,7 +18,7 @@ export default function SpaceBackground({ children }) {
       </div>
 
       {/* 🧱 Contenido */}
-      <div className="relative z-10">
+      <div className="relative z-10 max-w-xl m-auto">
         {children}
       </div>
     </div>

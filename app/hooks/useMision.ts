@@ -119,7 +119,7 @@ export function useMision(idMision: string) {
     }).eq('id', idMision);
   };
 
-  // Función para que el Jefe de Espías envíe la pista
+  // Función para que el Jefe de flota envíe la pista
   const enviarPista = async (palabra: string, cantidad: number) => {
     if (!mision || mision.estado !== 'jugando') return;
 
