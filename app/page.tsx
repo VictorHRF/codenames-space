@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation'; // Importante: usar next/navigation en App Router
 import { crearNuevaMision } from './actions/crearMision';
+import Link from 'next/link';
 
 export default function Home() {
   const router = useRouter();
@@ -93,15 +94,15 @@ export default function Home() {
           </div>
 
           <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 border-t border-outline-variant/15 pt-6">
-            <a className="font-label text-xs tracking-[0.15em] text-on-surface-variant hover:text-primary transition-colors uppercase" href="#">Reglas del Juego</a>
-            <div className="hidden sm:block w-1 h-1 rounded-full bg-outline-variant/50"></div>
-            <a className="font-label text-xs tracking-[0.15em] text-on-surface-variant hover:text-tertiary transition-colors uppercase" href="#">Historia del Juego</a>
-            </div>
+            <Link className="font-label text-xs tracking-[0.15em] text-on-surface-variant hover:text-primary transition-colors uppercase" href="/reglas">Reglas del Juego</Link>
+              <div className="hidden sm:block w-1 h-1 rounded-full bg-outline-variant/50"></div>
+            <Link className="font-label text-xs tracking-[0.15em] text-on-surface-variant hover:text-tertiary transition-colors uppercase" href="/lore">Historia del Juego</Link>
+          </div>
             
-            <div className="mt-4 border-t border-outline-variant/10 flex justify-between items-center opacity-40">
+          <div className="mt-4 border-t border-outline-variant/10 flex justify-between items-center opacity-40">
             <span className="font-label text-[8px] tracking-[0.2em]">V 2.4.9</span>
             <span className="font-label text-[8px] tracking-[0.2em]">SEC: CLEAR</span>
-            </div>
+          </div>
 
         </div>
 
