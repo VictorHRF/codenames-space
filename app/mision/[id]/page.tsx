@@ -18,33 +18,73 @@ export default function SalaMision() {
 
   // Pantalla de carga mientras trae los datos de Supabase
   if (cargando) {
-     return <div className="min-h-screen flex items-center justify-center bg-black text-cyan-500 font-mono">ESTABLECIENDO CONEXIÓN...</div>;
+     return (
+       <div className="min-h-[80vh] flex items-center justify-center">
+         <div className="text-primary font-label tracking-[0.3em] animate-pulse uppercase text-sm">
+           Estableciendo Conexión de Enlace...
+         </div>
+       </div>
+     );
   }
 
   // Si la misión no existe en la base de datos
   if (!mision) {
-     return <div className="min-h-screen flex items-center justify-center bg-black text-red-500 font-mono">ERROR 404: SECTOR NO ENCONTRADO</div>;
+     return (
+       <div className="min-h-[80vh] flex items-center justify-center">
+         <div className="bg-surface-container/70 border border-error/30 p-8 bracket-tl bracket-br backdrop-blur-md">
+           <p className="text-error font-headline font-black text-xl tracking-tighter uppercase">ERROR 404: SECTOR NO ENCONTRADO</p>
+           <button onClick={() => window.location.href = '/'} className="mt-4 w-full text-xs font-label text-on-surface-variant hover:text-primary transition-colors uppercase tracking-widest">Regresar a la Base</button>
+         </div>
+       </div>
+     );
   }
 
   // --- 1. SELECCIÓN DE ROL ---
   if (!rol) {
     return (
-      <main className="min-h-screen flex flex-col items-center justify-center bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-slate-900 to-black text-white p-6">
-        <div className="mb-12 text-center">
-          <p className="text-cyan-500 font-mono tracking-widest text-sm mb-2">SECTOR CONECTADO</p>
-          <h1 className="text-3xl md:text-5xl font-black text-white tracking-tight">
-            MISIÓN: <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">{idMision}</span>
-          </h1>
-        </div>
-        <div className="grid md:grid-cols-2 gap-6 w-full max-w-4xl">
-          <button onClick={() => setRol('escuadron')} className="group relative flex flex-col items-center p-8 backdrop-blur-sm bg-white/5 border border-white/10 rounded-3xl hover:bg-white/10 hover:border-cyan-500/50 transition-all text-left">
-            <h2 className="text-2xl font-bold mb-2 text-cyan-400">Escuadrón de Rescate</h2>
-            <p className="text-slate-400 text-sm">Pantalla principal (Tablet/TV). Visualiza el mapa encriptado.</p>
-          </button>
-          <button onClick={() => setRol('ia')} className="group relative flex flex-col items-center p-8 backdrop-blur-sm bg-white/5 border border-white/10 rounded-3xl hover:bg-white/10 hover:border-red-500/50 transition-all text-left">
-            <h2 className="text-2xl font-bold mb-2 text-red-400">Computadora Central</h2>
-            <p className="text-slate-400 text-sm">Control maestro (Celular). Transmite las pistas.</p>
-          </button>
+      <main className="grow flex items-center justify-center p-4 mt-8">
+        <div className="w-full max-w-4xl relative">
+          
+          <div className="mb-12 text-center relative">
+            <p className="text-primary font-label tracking-[0.2em] text-[10px] md:text-xs mb-2 uppercase">Protocolo de Identificación Requerido</p>
+            <h1 className="text-4xl md:text-6xl font-black text-white tracking-tighter">
+              MISIÓN: <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-tertiary">{idMision}</span>
+            </h1>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8">
+            {/* Escuadrón - Color Verde (Primary) */}
+            <div className="group relative">
+              <div className="absolute -inset-1 bg-primary/20 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl"></div>
+              <button 
+                onClick={() => setRol('escuadron')} 
+                className="w-full relative flex flex-col items-center p-10 bg-surface-container/70 backdrop-blur-lg border border-outline-variant/15 rounded-2xl hover:border-primary/50 transition-all text-center bracket-tl"
+              >
+                <div className="w-16 h-16 mb-6 rounded-full bg-primary/10 flex items-center justify-center border border-primary/20 group-hover:scale-110 transition-transform">
+                  <div className="w-8 h-8 rounded-full bg-primary/40 animate-pulse"></div>
+                </div>
+                <h2 className="text-2xl font-headline font-bold mb-3 text-primary uppercase tracking-wide">Escuadrón</h2>
+                <p className="text-on-surface-variant/70 text-xs font-label leading-relaxed tracking-wide uppercase">Unidad de rescate en campo. Visualización del mapa táctico encriptado.</p>
+                <div className="mt-8 text-[10px] font-label text-primary/40 tracking-[0.2em] uppercase">Acceso Nivel 1</div>
+              </button>
+            </div>
+
+            {/* Computadora Central - Color Rosa (Tertiary) */}
+            <div className="group relative">
+              <div className="absolute -inset-1 bg-tertiary/20 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl"></div>
+              <button 
+                onClick={() => setRol('ia')} 
+                className="w-full relative flex flex-col items-center p-10 bg-surface-container/70 backdrop-blur-lg border border-outline-variant/15 rounded-2xl hover:border-tertiary/50 transition-all text-center bracket-br"
+              >
+                <div className="w-16 h-16 mb-6 rounded-full bg-tertiary/10 flex items-center justify-center border border-tertiary/20 group-hover:scale-110 transition-transform">
+                  <div className="w-8 h-8 bg-tertiary/40 rotate-45 animate-pulse"></div>
+                </div>
+                <h2 className="text-2xl font-headline font-bold mb-3 text-tertiary uppercase tracking-wide">Computadora</h2>
+                <p className="text-on-surface-variant/70 text-xs font-label leading-relaxed tracking-wide uppercase">Cerebro de la operación. Transmisión de coordenadas encriptadas.</p>
+                <div className="mt-8 text-[10px] font-label text-tertiary/40 tracking-[0.2em] uppercase">Acceso Nivel 5</div>
+              </button>
+            </div>
+          </div>
         </div>
       </main>
     );
@@ -57,69 +97,82 @@ export default function SalaMision() {
   // --- 2. VISTA DE LA COMPUTADORA CENTRAL (CELULAR) ---
   if (rol === 'ia') {
     return (
-      <main className="min-h-screen bg-[#0a0505] text-white p-2 md:p-4 font-sans bg-[url('https://www.transparenttextures.com/patterns/stardust.png')]">
-        <div className="max-w-md mx-auto">
+      <main className="grow flex flex-col p-4">
+        <div className="max-w-md mx-auto w-full">
           
-          <header className="flex justify-between items-center mb-4 bg-red-950/30 border border-red-900/50 p-4 rounded-xl">
+          <header className="flex justify-between items-center mb-6 bg-surface-container/70 backdrop-blur-md border border-outline-variant/15 p-5 rounded-xl bracket-tl">
             <div>
-              <p className="text-red-400 text-xs font-mono uppercase tracking-widest">Nivel de Acceso: IA</p>
-              <h1 className="text-xl font-black text-white">MAPA TÁCTICO</h1>
+              <p className="text-tertiary font-label text-[10px] uppercase tracking-[0.2em] mb-1">Enlace de Datos: Nivel 5</p>
+              <h1 className="text-xl font-headline font-black text-white tracking-tight">MAPA TÁCTICO</h1>
             </div>
-            <div className="flex gap-2">
-              <div className="bg-cyan-900 border border-cyan-500 px-3 py-1 rounded text-cyan-100 font-bold">{faltanZirtox}</div>
-              <div className="bg-red-900 border border-red-500 px-3 py-1 rounded text-red-100 font-bold">{faltanNebulis}</div>
+            <div className="flex gap-3">
+              <div className="flex flex-col items-center">
+                <span className="text-[8px] font-label text-primary uppercase mb-1">ZIR</span>
+                <div className="bg-primary/10 border border-primary/30 px-3 py-1 rounded text-primary font-bold text-lg">{faltanZirtox}</div>
+              </div>
+              <div className="flex flex-col items-center">
+                <span className="text-[8px] font-label text-tertiary uppercase mb-1">NEB</span>
+                <div className="bg-tertiary/10 border border-tertiary/30 px-3 py-1 rounded text-tertiary font-bold text-lg">{faltanNebulis}</div>
+              </div>
             </div>
           </header>
 
-          <div className="bg-white/5 border border-white/10 p-4 rounded-xl mb-6 backdrop-blur-md">
-            <label className="block text-xs text-slate-400 font-medium uppercase tracking-widest mb-3">
-              Transmitir Coordenadas ({mision.turno_actual === 'zirtox' ? 'Turno Zirtox' : 'Turno Nebulis'})
+          <div className="bg-surface-container/40 border border-outline-variant/10 p-5 rounded-xl mb-6 backdrop-blur-sm relative">
+            <div className="absolute top-0 right-0 w-8 h-8 border-t border-r border-outline-variant/30 rounded-tr-xl"></div>
+            <label className="block text-[10px] text-on-surface-variant font-label uppercase tracking-[0.2em] mb-4">
+              Transmitir a Escuadrón ({mision.turno_actual === 'zirtox' ? <span className="text-primary">Zirtox</span> : <span className="text-tertiary">Nebulis</span>})
             </label>
-            <div className="flex gap-2">
+            <div className="flex gap-3">
               <input 
                 type="text" 
                 placeholder="PALABRA"
                 value={palabraClave}
                 onChange={(e) => setPalabraClave(e.target.value)}
-                className="flex-1 bg-black/50 border border-slate-700 rounded-lg px-3 py-2 text-white font-bold uppercase tracking-widest focus:border-red-500 focus:outline-none"
+                className="flex-1 bg-surface-container-lowest/50 border border-outline-variant/30 rounded-lg px-4 py-3 text-white font-label font-bold uppercase tracking-widest focus:border-tertiary focus:outline-none transition-colors"
               />
-              <select 
-                value={cantidadClave}
-                onChange={(e) => setCantidadClave(e.target.value)}
-                className="w-16 bg-black/50 border border-slate-700 rounded-lg px-2 py-2 text-center text-white font-bold focus:border-red-500 focus:outline-none appearance-none"
-              >
-                {[1,2,3,4,5,6,7,8,9,0].map(num => (
-                  <option key={num} value={num}>{num}</option>
-                ))}
-              </select>
+              <div className="relative">
+                <select 
+                  value={cantidadClave}
+                  onChange={(e) => setCantidadClave(e.target.value)}
+                  className="w-16 h-full bg-surface-container-lowest/50 border border-outline-variant/30 rounded-lg px-2 py-3 text-center text-white font-label font-bold focus:border-tertiary focus:outline-none appearance-none"
+                >
+                  {[1,2,3,4,5,6,7,8,9,0].map(num => (
+                    <option key={num} value={num}>{num}</option>
+                  ))}
+                </select>
+                <div className="absolute right-1 top-1/2 -translate-y-1/2 pointer-events-none text-on-surface-variant/30">
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><path d="M6 9l6 6 6-6"/></svg>
+                </div>
+              </div>
               <button 
                 onClick={() => {
                   enviarPista(palabraClave, parseInt(cantidadClave));
-                  setPalabraClave(''); // Limpiamos el input
+                  setPalabraClave(''); 
                 }}
-                className="bg-red-700 hover:bg-red-600 border border-red-500 text-white font-bold px-4 py-2 rounded-lg transition-all text-sm uppercase tracking-wider"
+                className="bg-tertiary hover:bg-tertiary-fixed text-on-tertiary-fixed font-headline font-bold px-6 py-3 rounded-lg transition-all text-xs uppercase tracking-widest active:scale-95 shadow-[0_0_20px_rgba(255,107,155,0.2)]"
               >
                 Enviar
               </button>
             </div>
           </div>
 
-          <div className="grid grid-cols-5 gap-1 md:gap-2">
+          <div className="grid grid-cols-5 gap-1.5 md:gap-3">
             {mision.tablero.map((carta) => {
               let estilosCarta = "";
-              if (carta.identidad_secreta === 'zirtox') estilosCarta = "bg-cyan-900 border-cyan-700 text-cyan-100";
-              else if (carta.identidad_secreta === 'nebulis') estilosCarta = "bg-red-900 border-red-700 text-red-100";
-              else if (carta.identidad_secreta === 'inocente') estilosCarta = "bg-slate-800 border-slate-600 text-slate-300";
-              else if (carta.identidad_secreta === 'asesino') estilosCarta = "bg-black border-green-500 text-green-500 shadow-[0_0_10px_rgba(34,197,94,0.3)]";
+              if (carta.identidad_secreta === 'zirtox') estilosCarta = "bg-primary/20 border-primary/40 text-primary shadow-[0_0_10px_rgba(142,255,113,0.1)]";
+              else if (carta.identidad_secreta === 'nebulis') estilosCarta = "bg-tertiary/20 border-tertiary/40 text-tertiary shadow-[0_0_10px_rgba(255,107,155,0.1)]";
+              else if (carta.identidad_secreta === 'inocente') estilosCarta = "bg-surface-container-high/50 border-outline-variant/30 text-on-surface-variant";
+              else if (carta.identidad_secreta === 'asesino') estilosCarta = "bg-black border-error/50 text-error shadow-[0_0_15px_rgba(255,115,81,0.2)]";
 
-              const estilosRevelada = carta.revelada ? "opacity-30 grayscale" : "";
+              const estilosRevelada = carta.revelada ? "opacity-20 grayscale scale-95" : "hover:scale-[1.02]";
 
               return (
-                <div key={carta.id} className={`relative flex items-center justify-center p-1 md:p-2 rounded border aspect-[4/3] overflow-hidden text-center ${estilosCarta} ${estilosRevelada}`}>
+                <div key={carta.id} className={`relative flex items-center justify-center p-1.5 rounded-lg border aspect-[3/4] overflow-hidden text-center transition-all duration-300 ${estilosCarta} ${estilosRevelada}`}>
+                  <div className="absolute top-0 left-0 w-1 h-1 border-t border-l border-current/30"></div>
                   {carta.revelada && (
-                    <div className="absolute inset-0 flex items-center justify-center text-white/50 text-3xl font-black mix-blend-overlay">✗</div>
+                    <div className="absolute inset-0 flex items-center justify-center text-current/40 text-2xl font-black mix-blend-overlay">✕</div>
                   )}
-                  <span className="font-bold text-[8px] md:text-xs tracking-wider break-words w-full">
+                  <span className="font-label font-bold text-[7px] md:text-[10px] leading-tight tracking-wider break-words w-full uppercase">
                     {carta.palabra}
                   </span>
                 </div>
@@ -127,6 +180,9 @@ export default function SalaMision() {
             })}
           </div>
           
+          <div className="mt-8 text-center">
+            <button onClick={() => setRol(null)} className="text-[10px] font-label text-on-surface-variant hover:text-white uppercase tracking-[0.2em] transition-colors">Reconfigurar Enlace</button>
+          </div>
         </div>
       </main>
     );
@@ -140,18 +196,18 @@ export default function SalaMision() {
         <header className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center mb-8 bg-white/5 border border-white/10 backdrop-blur-md p-4 rounded-2xl">
           <div className="text-center md:text-left mb-4 md:mb-0">
             <p className="text-slate-400 text-xs font-mono uppercase tracking-widest">Estado de la Misión</p>
-            <h1 className="text-2xl font-black text-cyan-400">SECTOR {idMision}</h1>
+            <h1 className="text-2xl font-black text-primary">SECTOR {idMision}</h1>
           </div>
 
-          <div className="flex flex-col items-center bg-black/50 border border-slate-700 px-8 py-3 rounded-xl shadow-[0_0_15px_rgba(34,211,238,0.2)]">
+          <div className="flex flex-col items-center bg-black/50 border border-slate-700 px-8 py-3 rounded-xl shadow-[0_0_15px_rgba(34,197,94,0.2)]">
             <span className="text-xs text-slate-400 uppercase tracking-widest mb-1">
-              {mision.turno_actual === 'zirtox' ? <span className="text-cyan-400">Turno Equipo Zirtox</span> : <span className="text-red-400">Turno Equipo Nebulis</span>}
+              {mision.turno_actual === 'zirtox' ? <span className="text-primary">Turno Equipo Zirtox</span> : <span className="text-tertiary">Turno Equipo Nebulis</span>}
             </span>
             <div className="flex items-center gap-3 min-h-[32px]">
               {mision.pista_actual ? (
                 <>
                   <span className="text-2xl font-bold text-white tracking-widest uppercase">{mision.pista_actual.palabra}</span>
-                  <span className="text-cyan-400 font-black text-2xl">{mision.pista_actual.cantidad}</span>
+                  <span className="text-primary font-black text-2xl">{mision.pista_actual.cantidad}</span>
                 </>
               ) : (
                 <span className="text-slate-500 font-mono text-sm">ESPERANDO TRANSMISIÓN...</span>
@@ -210,8 +266,8 @@ export default function SalaMision() {
           <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50">
              <div className="bg-slate-900 border border-slate-700 p-10 rounded-2xl text-center shadow-2xl">
                 <h2 className="text-4xl font-black mb-4 uppercase">
-                  {mision.estado === 'gana_zirtox' && <span className="text-cyan-400">¡ESCUADRÓN ZIRTOX GANA!</span>}
-                  {mision.estado === 'gana_nebulis' && <span className="text-red-400">¡ESCUADRÓN NEBULIS GANA!</span>}
+                  {mision.estado === 'gana_zirtox' && <span className="text-primary">¡ESCUADRÓN ZIRTOX GANA!</span>}
+                  {mision.estado === 'gana_nebulis' && <span className="text-tertiary">¡ESCUADRÓN NEBULIS GANA!</span>}
                   {mision.estado === 'gana_alien' && <span className="text-green-500">¡EL ALIENÍGENA HA VENCIDO!</span>}
                 </h2>
                 <button onClick={() => window.location.href = '/'} className="mt-6 bg-white text-black px-8 py-3 rounded-xl font-bold">Volver a la Base</button>
