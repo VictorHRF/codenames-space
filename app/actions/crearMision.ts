@@ -2,7 +2,7 @@
 'use server' // ¡Esto es clave! Le dice a Next.js que este código NUNCA se enviará al navegador.
 
 import { createClient } from '@supabase/supabase-js';
-import { DICCIONARIO_ESPACIAL, barajarArray, generarCodigoSala } from '../lib/juego';
+import { DICCIONARIO, barajarArray, generarCodigoSala } from '../lib/juego';
 
 // Inicializamos Supabase con nuestras variables de entorno
 const supabase = createClient(
@@ -13,7 +13,7 @@ const supabase = createClient(
 export async function crearNuevaMision() {
   try {
     // 1. Elegir 25 palabras al azar del diccionario
-    const palabrasMezcladas = barajarArray(DICCIONARIO_ESPACIAL).slice(0, 25);
+    const palabrasMezcladas = barajarArray(DICCIONARIO).slice(0, 25);
 
     // 2. Decidir qué equipo empieza (50% de probabilidad para cada uno)
     // Determinar quién empieza (ahora con Zirtox y Nebulis)
