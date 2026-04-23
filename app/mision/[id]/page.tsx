@@ -63,7 +63,7 @@ export default function SalaMision() {
                 <div className="w-16 h-16 mb-6 rounded-full bg-primary/10 flex items-center justify-center border border-primary/20 group-hover:scale-110 transition-transform">
                   <div className="w-8 h-8 rounded-full bg-primary/40 animate-pulse"></div>
                 </div>
-                <h2 className="text-2xl font-headline font-bold mb-3 text-primary uppercase tracking-wide">Escuadrón</h2>
+                <h2 className="text-2xl font-headline font-bold mb-3 text-primary uppercase tracking-wide">Tripulantes</h2>
                 <p className="text-on-surface-variant/70 text-xs font-label leading-relaxed tracking-wide uppercase">Unidad de rescate en campo. Visualización del mapa táctico encriptado.</p>
                 <div className="mt-8 text-[10px] font-label text-primary/40 tracking-[0.2em] uppercase">Acceso Nivel 1</div>
               </button>
@@ -79,7 +79,7 @@ export default function SalaMision() {
                 <div className="w-16 h-16 mb-6 rounded-full bg-tertiary/10 flex items-center justify-center border border-tertiary/20 group-hover:scale-110 transition-transform">
                   <div className="w-8 h-8 bg-tertiary/40 rotate-45 animate-pulse"></div>
                 </div>
-                <h2 className="text-2xl font-headline font-bold mb-3 text-tertiary uppercase tracking-wide">Computadora</h2>
+                <h2 className="text-2xl font-headline font-bold mb-3 text-tertiary uppercase tracking-wide">Jefe de flota</h2>
                 <p className="text-on-surface-variant/70 text-xs font-label leading-relaxed tracking-wide uppercase">Cerebro de la operación. Transmisión de coordenadas encriptadas.</p>
                 <div className="mt-8 text-[10px] font-label text-tertiary/40 tracking-[0.2em] uppercase">Acceso Nivel 5</div>
               </button>
@@ -94,47 +94,47 @@ export default function SalaMision() {
   const faltanZirtox = mision.tablero.filter(c => c.identidad_secreta === 'zirtox' && !c.revelada).length;
   const faltanNebulis = mision.tablero.filter(c => c.identidad_secreta === 'nebulis' && !c.revelada).length;
 
-  // --- 2. VISTA DE LA COMPUTADORA CENTRAL (CELULAR) ---
+  // --- 2. VISTA DE LA COMPUTADORA CENTRAL (CELULAR/TABLET) ---
   if (rol === 'ia') {
     return (
-      <main className="grow flex flex-col p-4">
-        <div className="max-w-md mx-auto w-full">
+      <main className="grow flex flex-col p-2 md:p-4 lg:p-6">
+        <div className="w-full h-full max-w-7xl mx-auto flex flex-col">
           
-          <header className="flex justify-between items-center mb-6 bg-surface-container/70 backdrop-blur-md border border-outline-variant/15 p-5 rounded-xl bracket-tl">
+          <header className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-4 md:mb-6 bg-surface-container/70 backdrop-blur-md border border-outline-variant/15 p-3 md:p-5 rounded-xl bracket-tl">
             <div>
-              <p className="text-tertiary font-label text-[10px] uppercase tracking-[0.2em] mb-1">Enlace de Datos: Nivel 5</p>
-              <h1 className="text-xl font-headline font-black text-white tracking-tight">MAPA TÁCTICO</h1>
+              <p className="text-tertiary font-label text-[8px] md:text-[10px] uppercase tracking-[0.2em] mb-1">Enlace de Datos: Nivel 5</p>
+              <h1 className="text-lg md:text-xl font-headline font-black text-white tracking-tight">MAPA TÁCTICO</h1>
             </div>
-            <div className="flex gap-3">
+            <div className="flex gap-2 md:gap-3">
               <div className="flex flex-col items-center">
-                <span className="text-[8px] font-label text-primary uppercase mb-1">ZIR</span>
-                <div className="bg-primary/10 border border-primary/30 px-3 py-1 rounded text-primary font-bold text-lg">{faltanZirtox}</div>
+                <span className="text-[7px] md:text-[8px] font-label text-primary uppercase mb-1">ZIR</span>
+                <div className="bg-primary/10 border border-primary/30 px-2 md:px-3 py-1 rounded text-primary font-bold text-base md:text-lg">{faltanZirtox}</div>
               </div>
               <div className="flex flex-col items-center">
-                <span className="text-[8px] font-label text-tertiary uppercase mb-1">NEB</span>
-                <div className="bg-tertiary/10 border border-tertiary/30 px-3 py-1 rounded text-tertiary font-bold text-lg">{faltanNebulis}</div>
+                <span className="text-[7px] md:text-[8px] font-label text-tertiary uppercase mb-1">NEB</span>
+                <div className="bg-tertiary/10 border border-tertiary/30 px-2 md:px-3 py-1 rounded text-tertiary font-bold text-base md:text-lg">{faltanNebulis}</div>
               </div>
             </div>
           </header>
 
-          <div className="bg-surface-container/40 border border-outline-variant/10 p-5 rounded-xl mb-6 backdrop-blur-sm relative">
+          <div className="bg-surface-container/40 border border-outline-variant/10 p-3 md:p-5 rounded-xl mb-4 md:mb-6 backdrop-blur-sm relative">
             <div className="absolute top-0 right-0 w-8 h-8 border-t border-r border-outline-variant/30 rounded-tr-xl"></div>
-            <label className="block text-[10px] text-on-surface-variant font-label uppercase tracking-[0.2em] mb-4">
+            <label className="block text-[8px] md:text-[10px] text-on-surface-variant font-label uppercase tracking-[0.2em] mb-3 md:mb-4">
               Transmitir a Escuadrón ({mision.turno_actual === 'zirtox' ? <span className="text-primary">Zirtox</span> : <span className="text-tertiary">Nebulis</span>})
             </label>
-            <div className="flex gap-3">
+            <div className="flex flex-col md:flex-row gap-2 md:gap-3">
               <input 
                 type="text" 
                 placeholder="PALABRA"
                 value={palabraClave}
                 onChange={(e) => setPalabraClave(e.target.value)}
-                className="flex-1 bg-surface-container-lowest/50 border border-outline-variant/30 rounded-lg px-4 py-3 text-white font-label font-bold uppercase tracking-widest focus:border-tertiary focus:outline-none transition-colors"
+                className="flex-1 bg-surface-container-lowest/50 border border-outline-variant/30 rounded-lg px-3 md:px-4 py-2 md:py-3 text-white font-label font-bold uppercase tracking-widest focus:border-tertiary focus:outline-none transition-colors text-xs md:text-sm"
               />
               <div className="relative">
                 <select 
                   value={cantidadClave}
                   onChange={(e) => setCantidadClave(e.target.value)}
-                  className="w-16 h-full bg-surface-container-lowest/50 border border-outline-variant/30 rounded-lg px-2 py-3 text-center text-white font-label font-bold focus:border-tertiary focus:outline-none appearance-none"
+                  className="w-full md:w-16 h-full bg-surface-container-lowest/50 border border-outline-variant/30 rounded-lg px-2 md:px-2 py-2 md:py-3 text-center text-white font-label font-bold focus:border-tertiary focus:outline-none appearance-none text-xs md:text-sm"
                 >
                   {[1,2,3,4,5,6,7,8,9,0].map(num => (
                     <option key={num} value={num}>{num}</option>
@@ -149,14 +149,14 @@ export default function SalaMision() {
                   enviarPista(palabraClave, parseInt(cantidadClave));
                   setPalabraClave(''); 
                 }}
-                className="bg-tertiary hover:bg-tertiary-fixed text-on-tertiary-fixed font-headline font-bold px-6 py-3 rounded-lg transition-all text-xs uppercase tracking-widest active:scale-95 shadow-[0_0_20px_rgba(255,107,155,0.2)]"
+                className="bg-tertiary hover:bg-tertiary-fixed text-on-tertiary-fixed font-headline font-bold px-4 md:px-6 py-2 md:py-3 rounded-lg transition-all text-xs uppercase tracking-widest active:scale-95 shadow-[0_0_20px_rgba(255,107,155,0.2)] whitespace-nowrap"
               >
                 Enviar
               </button>
             </div>
           </div>
 
-          <div className="grid grid-cols-5 gap-1.5 md:gap-3">
+          <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-1 md:gap-2 lg:gap-3 flex-1">
             {mision.tablero.map((carta) => {
               let estilosCarta = "";
               if (carta.identidad_secreta === 'zirtox') estilosCarta = "bg-primary/20 border-primary/40 text-primary shadow-[0_0_10px_rgba(142,255,113,0.1)]";
@@ -167,12 +167,12 @@ export default function SalaMision() {
               const estilosRevelada = carta.revelada ? "opacity-20 grayscale scale-95" : "hover:scale-[1.02]";
 
               return (
-                <div key={carta.id} className={`relative flex items-center justify-center p-1.5 rounded-lg border aspect-[3/4] overflow-hidden text-center transition-all duration-300 ${estilosCarta} ${estilosRevelada}`}>
+                <div key={carta.id} className={`relative flex items-center justify-center p-1 md:p-1.5 rounded-lg border aspect-[3/4] overflow-hidden text-center transition-all duration-300 ${estilosCarta} ${estilosRevelada}`}>
                   <div className="absolute top-0 left-0 w-1 h-1 border-t border-l border-current/30"></div>
                   {carta.revelada && (
                     <div className="absolute inset-0 flex items-center justify-center text-current/40 text-2xl font-black mix-blend-overlay">✕</div>
                   )}
-                  <span className="font-label font-bold text-[7px] md:text-[10px] leading-tight tracking-wider break-words w-full uppercase">
+                  <span className="font-label font-bold text-[6px] md:text-[8px] lg:text-[10px] leading-tight tracking-wider break-words w-full uppercase">
                     {carta.palabra}
                   </span>
                 </div>
@@ -180,8 +180,8 @@ export default function SalaMision() {
             })}
           </div>
           
-          <div className="mt-8 text-center">
-            <button onClick={() => setRol(null)} className="text-[10px] font-label text-on-surface-variant hover:text-white uppercase tracking-[0.2em] transition-colors">Reconfigurar Enlace</button>
+          <div className="mt-4 md:mt-6 lg:mt-8 text-center">
+            <button onClick={() => setRol(null)} className="text-[8px] md:text-[10px] font-label text-on-surface-variant hover:text-white uppercase tracking-[0.2em] transition-colors">Reconfigurar Enlace</button>
           </div>
         </div>
       </main>
