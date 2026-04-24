@@ -21,7 +21,7 @@ export type EstadoMision = {
   turno_actual: 'zirtox' | 'nebulis';
   pista_actual: { palabra: string; cantidad: number } | null;
   tablero: Carta[];
-  estado: 'jugando' | 'gana_zirtox' | 'gana_nebulis' | 'gana_alien';
+  estado: 'jugando' | 'gana_zirtox' | 'gana_nebulis';
 };
 
 export function useMision(idMision: string) {
@@ -92,7 +92,8 @@ export function useMision(idMision: string) {
     let nuevoEstado: EstadoMision['estado'] = mision.estado;
 
     if (cartaTocada.identidad_secreta === 'asesino') {
-      nuevoEstado = 'gana_alien';
+      if (mision.turno_actual === 'zirtox') nuevoEstado = 'gana_nebulis';
+      else if (mision.turno_actual === 'nebulis') nuevoEstado = 'gana_zirtox';
     } else if (cartaTocada.identidad_secreta === 'inocente' || cartaTocada.identidad_secreta !== mision.turno_actual) {
       // Pierden el turno si abducen a un humano (inocente) o tocan una nave enemiga
       nuevoTurno = mision.turno_actual === 'zirtox' ? 'nebulis' : 'zirtox';

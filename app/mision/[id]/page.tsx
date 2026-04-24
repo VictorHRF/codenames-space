@@ -156,15 +156,15 @@ export default function SalaMision() {
             </div>
           </div>
 
-          <div className="grid grid-cols-5 gap-2 md:gap-4">
+          <div className="grid grid-cols-5 gap-2">
             {mision.tablero.map((carta) => {
               let estilosCarta = "";
-              if (carta.identidad_secreta === 'zirtox') estilosCarta = "bg-primary/30 border-primary/80 text-primary shadow-[0_0_10px_rgba(142,255,113,0.1)]";
-              else if (carta.identidad_secreta === 'nebulis') estilosCarta = "bg-tertiary/30 border-tertiary/80 text-tertiary shadow-[0_0_10px_rgba(255,107,155,0.1)]";
-              else if (carta.identidad_secreta === 'inocente') estilosCarta = "bg-surface-container-high/80 border-outline-variant/30 text-on-surface-variant";
-              else if (carta.identidad_secreta === 'asesino') estilosCarta = "bg-black border-error/10 text-error shadow-[0_0_15px_rgba(255,115,81,0.2)]";
+              if (carta.identidad_secreta === 'zirtox') estilosCarta = "bg-primary/40 border-primary/80 text-primary shadow-[0_0_10px_rgba(142,255,113,0.1)]";
+              else if (carta.identidad_secreta === 'nebulis') estilosCarta = "bg-tertiary/40 border-tertiary/80 text-tertiary shadow-[0_0_10px_rgba(255,107,155,0.1)]";
+              else if (carta.identidad_secreta === 'inocente') estilosCarta = "bg-surface-container-high/90 border-outline-variant/60 text-on-surface-variant";
+              else if (carta.identidad_secreta === 'asesino') estilosCarta = "bg-black border-error/40 text-error shadow-[0_0_15px_rgba(255,115,81,0.2)]";
 
-              const estilosRevelada = carta.revelada ? "opacity-20 grayscale scale-95" : "hover:scale-[1.02]";
+              const estilosRevelada = carta.revelada ? "opacity-30 grayscale scale-95" : "hover:scale-[1.02]";
 
               return (
                 <div key={carta.id} className={`relative flex items-center justify-center p-1 rounded-lg border aspect-square overflow-hidden text-center transition-all duration-300 ${estilosCarta} ${estilosRevelada}`}>
@@ -191,74 +191,80 @@ export default function SalaMision() {
   // --- 3. VISTA DEL TRIPULANTE  ---
   if (rol === 'tripulante') {
     return (
-      <main className="min-h-screen bg-[#050B14] text-white p-4 md:p-8 font-sans bg-[url('https://www.transparenttextures.com/patterns/stardust.png')]">
-        
-        <header className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center mb-8 bg-white/5 border border-white/10 backdrop-blur-md p-4 rounded-2xl">
-          <div className="text-center md:text-left mb-4 md:mb-0">
-            <p className="text-slate-400 text-xs font-mono uppercase tracking-widest">Estado de la Misión</p>
-            <h1 className="text-2xl font-black text-primary">SECTOR {idMision}</h1>
-          </div>
-
-          <div className="flex flex-col items-center bg-black/50 border border-slate-700 px-8 py-3 rounded-xl shadow-[0_0_15px_rgba(34,197,94,0.2)]">
-            <span className="text-xs text-slate-400 uppercase tracking-widest mb-1">
-              {mision.turno_actual === 'zirtox' ? <span className="text-primary">Turno Equipo Zirtox</span> : <span className="text-tertiary">Turno Equipo Nebulis</span>}
-            </span>
-            <div className="flex items-center gap-3 min-h-[32px]">
-              {mision.pista_actual ? (
-                <>
-                  <span className="text-2xl font-bold text-white tracking-widest uppercase">{mision.pista_actual.palabra}</span>
-                  <span className="text-primary font-black text-2xl">{mision.pista_actual.cantidad}</span>
-                </>
-              ) : (
-                <span className="text-slate-500 font-mono text-sm">ESPERANDO TRANSMISIÓN...</span>
-              )}
+      <main className="flex flex-col p-2 md:p-4">
+        <div className="w-full h-full max-w-7xl mx-auto flex flex-col">
+          
+          <header className="flex flex-col md:flex-row justify-between items-center gap-2 mb-8 bg-surface-container/40 backdrop-blur-md border border-outline-variant/15 p-4 md:p-5 rounded-xl bracket-tl">
+            <div className="text-center md:text-left">
+              <p className="text-slate-400 text-[10px] text-center font-mono uppercase tracking-widest mb-1">Estado de la Misión: </p>
+              <h1 className="text-[14px] text-center font-black text-primary">SECTOR {idMision}</h1>
             </div>
-          </div>
 
-          <button 
-            onClick={terminarTurno}
-            className="mt-4 md:mt-0 px-6 py-2 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-lg text-sm font-bold tracking-widest transition-all"
-          >
-            TERMINAR TURNO
-          </button>
-        </header>
-
-        <div className="max-w-6xl mx-auto grid grid-cols-5 gap-2 md:gap-4">
-          {mision.tablero.map((carta) => {
-            // Lógica de colores para las cartas
-            let estilosCarta = "bg-white/5 border-white/20 text-white hover:bg-white/10"; // Cristal oscuro por defecto
-
-            if (carta.revelada) {
-              if (carta.identidad_secreta === 'zirtox') {
-                estilosCarta = "bg-green-500/20 border-green-500 text-green-400 shadow-[0_0_15px_#22c55e]";
-              } else if (carta.identidad_secreta === 'nebulis') {
-                estilosCarta = "bg-pink-500/20 border-pink-500 text-pink-400 shadow-[0_0_15px_#ec4899]";
-              } else if (carta.identidad_secreta === 'inocente') {
-                estilosCarta = "bg-gray-800 border-gray-600 text-gray-500 opacity-50";
-              } else if (carta.identidad_secreta === 'asesino') {
-                estilosCarta = "bg-black border-red-600 text-red-500 shadow-[0_0_30px_#dc2626] animate-pulse";
-              }
-            }
-
-            return (
-              <button
-                key={carta.id}
-                onClick={() => revelarCarta(carta.id)}
-                disabled={carta.revelada || mision.estado !== 'jugando'}
-                className={`
-                  relative flex items-center justify-center p-2 md:p-6 rounded-xl border backdrop-blur-sm transition-all duration-300 aspect-video md:aspect-[4/3] overflow-hidden group
-                  ${estilosCarta}
-                `}
-              >
-                {carta.revelada && (
-                  <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_center,_transparent_0%,_rgba(0,0,0,0.4)_100%)] mix-blend-overlay pointer-events-none"></div>
+            <div className="flex flex-col items-center bg-black/40 border border-outline-variant/15 px-10 py-4 md:px-2 md:py-2 rounded-xl shadow-[0_0_15px_rgba(34,197,94,0.1)] backdrop-blur-sm">
+              <span className="text-[12px] text-slate-400 uppercase tracking-widest mb-1">
+                {mision.turno_actual === 'zirtox' ? <span className="text-primary font-bold">Turno Equipo Zirtox</span> : <span className="text-tertiary font-bold">Turno Equipo Nebulis</span>}
+              </span>
+              <div className="flex items-center gap-3 min-h-[32px]">
+                {mision.pista_actual ? (
+                  <>
+                    <span className="text-[14px] font-bold text-white tracking-widest uppercase">{mision.pista_actual.palabra}</span>
+                    <span className="text-primary font-black text-[14px]">{mision.pista_actual.cantidad}</span>
+                  </>
+                ) : (
+                  <span className="text-slate-400 font-mono text-[12px] md:text-[10px]">ESPERANDO TRANSMISIÓN...</span>
                 )}
-                <span className={`font-bold text-xs md:text-lg tracking-widest z-10 ${carta.revelada && carta.identidad_secreta === 'asesino' ? 'text-green-500 drop-shadow-[0_0_8px_rgba(34,197,94,0.8)]' : ''}`}>
-                  {carta.revelada && carta.identidad_secreta === 'asesino' ? '¡PELIGRO!' : carta.palabra}
-                </span>
-              </button>
-            );
-          })}
+              </div>
+            </div>
+
+            <button 
+              onClick={terminarTurno}
+              className="px-4 py-3 md:px-1 bg-surface-container-highest hover:bg-surface-container-high border border-outline-variant/30 rounded-lg text-[12px] font-bold tracking-widest transition-all uppercase text-white"
+            >
+              Terminar Turno
+            </button>
+          </header>
+
+          <div className="grid grid-cols-5 gap-1 md:gap-2 flex-1">
+            {mision.tablero.map((carta) => {
+              // Lógica de colores para las cartas
+              let estilosCarta = "bg-surface-container/80 border-outline-variant/50 text-white hover:bg-surface-container/80 hover:border-outline-variant/40"; 
+
+              if (carta.revelada) {
+                if (carta.identidad_secreta === 'zirtox') {
+                  estilosCarta = "bg-primary/30 border-primary/80 text-primary shadow-[0_0_15px_rgba(34,197,94,0.3)]";
+                } else if (carta.identidad_secreta === 'nebulis') {
+                  estilosCarta = "bg-tertiary/30 border-tertiary/80 text-tertiary shadow-[0_0_15px_rgba(255,107,155,0.3)]";
+                } else if (carta.identidad_secreta === 'inocente') {
+                  estilosCarta = "bg-surface-container-highest/80 border-outline-variant/30 text-on-surface-variant opacity-50";
+                } else if (carta.identidad_secreta === 'asesino') {
+                  estilosCarta = "bg-black border-error/50 text-error shadow-[0_0_30px_rgba(255,115,81,0.4)] animate-pulse";
+                }
+              }
+
+              return (
+                <button
+                  key={carta.id}
+                  onClick={() => revelarCarta(carta.id)}
+                  disabled={carta.revelada || mision.estado !== 'jugando'}
+                  className={`
+                    relative flex items-center aspect-square justify-center p-4 md:p-6 rounded-xl border backdrop-blur-md transition-all duration-300 overflow-hidden group
+                    ${estilosCarta}
+                  `}
+                >
+                  {carta.revelada && (
+                    <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_center,_transparent_0%,_rgba(0,0,0,0.4)_100%)] mix-blend-overlay pointer-events-none"></div>
+                  )}
+                  <span className={`font-bold text-[10px] md:text-[14px] tracking-widest z-10 uppercase ${carta.revelada && carta.identidad_secreta === 'asesino' ? 'text-error drop-shadow-[0_0_8px_rgba(255,115,81,0.8)]' : ''}`}>
+                    {carta.revelada && carta.identidad_secreta === 'asesino' ? '¡PELIGRO!' : carta.palabra}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+          
+          <div className="mt-8 text-center">
+            <button onClick={() => setRol(null)} className="text-[10px] font-label text-on-surface-variant hover:text-white uppercase tracking-[0.2em] transition-colors">Reconfigurar Enlace</button>
+          </div>
         </div>
         
         {/* Notificación de Fin de Juego */}
@@ -268,7 +274,6 @@ export default function SalaMision() {
                 <h2 className="text-4xl font-black mb-4 uppercase">
                   {mision.estado === 'gana_zirtox' && <span className="text-primary">¡ESCUADRÓN ZIRTOX GANA!</span>}
                   {mision.estado === 'gana_nebulis' && <span className="text-tertiary">¡ESCUADRÓN NEBULIS GANA!</span>}
-                  {mision.estado === 'gana_alien' && <span className="text-green-500">¡EL ALIENÍGENA HA VENCIDO!</span>}
                 </h2>
                 <button onClick={() => window.location.href = '/'} className="mt-6 bg-white text-black px-8 py-3 rounded-xl font-bold">Volver a la Base</button>
              </div>
